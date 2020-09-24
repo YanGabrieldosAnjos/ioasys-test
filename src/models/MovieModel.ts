@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToMany, OneToMany } from "typeorm";
+import { Column, Entity, ManyToMany, OneToMany, JoinColumn, JoinTable } from "typeorm";
 import { ActorModel } from "./ActorModel";
 import  BaseModel  from "./BaseModel";
 import { VoteModel } from "./VoteModel";
@@ -21,5 +21,6 @@ export class MovieModel extends BaseModel{
     votes!: VoteModel[];
 
     @ManyToMany(type => ActorModel)
+    @JoinTable()
     actors!: ActorModel[];
 }

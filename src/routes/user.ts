@@ -2,15 +2,15 @@ import { Router, Request, Response} from "express";
 import { INewUser, userController } from "../controllers/index";
 
 const router = Router();
-const user =  new userController();
 
 router.post("/login", async (req: Request, res: Response) => {
     try{
         const {username, password} = req.body;
+        const user =  new userController();
 
-        res.send(await user.login(username, password));
+        res.json(await user.login(username, password));
     }catch(error){
-        throw new Error(`Erro interno.`);
+        throw error;
     }
 });
 
@@ -24,8 +24,9 @@ router.post("/create", async (req: Request, res: Response) =>{
             password,
             isAdmin
         } = req.body;
-
-        res.send(user.createUser({password, name, email, username, isAdmin}));
+        const user =  new userController();
+        
+        res.status(201).json(await user.createUser({password, name, email, username, isAdmin}));
 
     }catch(error){
         throw new Error(`Erro interno.`);
@@ -39,8 +40,9 @@ interface IUserParams extends INewUser{
 router.put("/update", async (req: Request, res: Response) =>{
     try{
         const userReceived: IUserParams = req.body; 
+        const user =  new userController();
 
-        return user.updateUser({...userReceived}, userReceived.id);
+        res.json(await user.updateUser({...userReceived}, userReceived.id));
 
     }catch(error){
         throw new Error(`Erro interno.`);
@@ -50,9 +52,10 @@ router.put("/update", async (req: Request, res: Response) =>{
 router.delete("/delete", async (req: Request, res: Response) =>{
     try{
         const userId: string = req.body; 
-
+        const user =  new userController();
+        
         await user.deleteUser(userId);
-        res.send({deleted: "ok"})
+        res.json({deleted: "ok"})
     }catch(error){
         throw new Error(`Erro interno.`);
     }

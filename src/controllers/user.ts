@@ -21,12 +21,16 @@ export class userController {
         this.userRepository = getCustomRepository(UserRepository);
     }
     async login(username: string, password: string): Promise<IUser>{
+        try{
+            const [user] = await this.userRepository.find({username});
         
-        const [user] = await this.userRepository.find({username});
-        
-        return bcrypt.compare(password, user.password).then(result => {
-            return {...user}; 
-        })
+            if(!await bcrypt.compare(password, user.password)){
+                throw new Error("Não encontrado.");
+            }
+            return user;
+        }catch(error){
+            throw error;
+        }
     }
 
     async createUser(user: INewUser): Promise<IUser>{

@@ -11,7 +11,7 @@ abstract class BaseModel{
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP'})
     updatedAt!: Timestamp;
 
-    @Column({ type: 'timestamp', default: () => 'NULL'})
+    @Column({ type: 'timestamp', nullable: true})
     deletedAt!: Timestamp | null
 }
 
