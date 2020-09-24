@@ -1,6 +1,5 @@
 import { Column, Entity } from "typeorm";
-import { BaseModel } from "./BaseModel";
-import { VoteModel } from "./VoteModel";
+import  BaseModel  from "./BaseModel";
 
 @Entity({name: "actors"})
 export class ActorModel extends BaseModel{

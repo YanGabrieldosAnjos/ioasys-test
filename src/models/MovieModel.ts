@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToMany, OneToMany } from "typeorm";
 import { ActorModel } from "./ActorModel";
-import { BaseModel } from "./BaseModel";
+import  BaseModel  from "./BaseModel";
 import { VoteModel } from "./VoteModel";
 
 @Entity({name: "movies"})

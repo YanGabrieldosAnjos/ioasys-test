@@ -1,7 +1,7 @@
 import { Column,  PrimaryGeneratedColumn, Timestamp } from "typeorm";
 
 
-export abstract class BaseModel{
+abstract class BaseModel{
     @PrimaryGeneratedColumn("uuid")
     id!: string;
 
@@ -14,3 +14,5 @@ export abstract class BaseModel{
     @Column({ type: 'timestamp', default: () => 'NULL'})
     deletedAt!: Timestamp | null
 }
+
+export default BaseModel;

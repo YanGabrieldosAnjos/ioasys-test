@@ -1,4 +1,4 @@
-import { getCustomRepository } from "typeorm";
+import { getCustomRepository, getRepository } from "typeorm";
 import {UserRepository} from "../repositories";
 import * as bcrypt from "bcrypt";
 export interface INewUser {
@@ -16,8 +16,10 @@ interface IUser {
     email: string;
 }
 export class userController {
-    
-    userRepository = getCustomRepository(UserRepository);
+    userRepository: UserRepository;
+    constructor(){
+        this.userRepository = getCustomRepository(UserRepository);
+    }
     async login(username: string, password: string): Promise<IUser>{
         
         const [user] = await this.userRepository.find({username});

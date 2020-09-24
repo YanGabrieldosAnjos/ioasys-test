@@ -1,6 +1,6 @@
 import { type } from "os";
 import { Column,  Entity,  JoinColumn,  ManyToOne,  MongoCallback,  OneToOne,  PrimaryGeneratedColumn, Timestamp } from "typeorm";
-import { BaseModel } from "./BaseModel";
+import BaseModel from "./BaseModel";
 import { MovieModel } from "./MovieModel";
 import { UserModel } from "./UserModel";
 
