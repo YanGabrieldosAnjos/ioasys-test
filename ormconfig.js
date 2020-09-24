@@ -12,14 +12,12 @@ const {
  
  module.exports = {
    type: "postgres",
- 
    database: DB_DATABASE,
    host: DB_HOST,
    password: DB_PASSWORD,
    port: DB_PORT,
    username: DB_USERNAME,
    logging: Boolean(DB_LOGGING),
- 
    cli: {
      migrationsDir: "src/migrations",
    },
