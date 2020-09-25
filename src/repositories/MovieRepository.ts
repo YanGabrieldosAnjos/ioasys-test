@@ -8,6 +8,13 @@ export class MovieRepository extends Repository<MovieModel> {
 
         const {actors, director, genre} = filter;
         const query =  this.createQueryBuilder().select();
+        query.leftJoinAndSelect("MovieModel.votes", "vote");
+         if(actors){
+            query.leftJoinAndMapMany("MovieModel", "MovieModel.actors","actors")
+
+        
+            query.andWhere(`"actors".name IN (:name)`, {name: actors.map(({name}) => name)})
+        }            
         if(director){
             query.andWhere(`director = :director`);
         }
@@ -16,13 +23,10 @@ export class MovieRepository extends Repository<MovieModel> {
             query.andWhere(`genre = :genre`);
         }
 
-        if(actors){
-            query.leftJoin("movies.actors", "actor");
-            for(const actor of actors){
-                query.andWhere("actors.name = :name", {name: actor.name})
-            }
-        }            
-        return query.setParameters({director, genre}).getMany();
+        
+
+       
+        return query.setParameters({actors, director, genre}).getMany();
               
     }
 }
