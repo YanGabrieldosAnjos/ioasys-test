@@ -23,6 +23,8 @@ interface IMovieDetails extends IMovie{
     scoreTotal: number;
     numberOfVotes: number;
 }
+
+
 export class MovieController {
     movieRepository: MovieRepository;
     voteRepository: VoteRepository;
@@ -48,11 +50,12 @@ export class MovieController {
         this.voteRepository.save({user, movie, score })
     }
 
+  
     async getMovie(filter: IMovieFilter): Promise<IMovieDetails[]>{
 
         const moviesDB = await this.movieRepository.filterMovies(filter);
-        
         return moviesDB.map(movie =>{
+            const numberOfVotes = movie.votes? movie.votes.length : 0;
             let votesRate = 0;
             if(movie.votes){
                 votesRate = movie.votes.reduce((acc, cur)=> {
@@ -61,8 +64,8 @@ export class MovieController {
             } 
             return {
                 ...movie,
-                scoreTotal: votesRate,
-                numberOfVotes: 2
+                scoreTotal: votesRate > 0 ?  votesRate/numberOfVotes: 0,
+                numberOfVotes
             }
         });     
     }
