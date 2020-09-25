@@ -27,7 +27,7 @@ router.post("/vote", async (req: Request, res: Response) =>{
         await movie.voteMovie(userId, movieId, score)
         res.send({voted: "ok"});
     }catch(error){
-        throw new Error(`Erro interno.`);
+        throw error;
     }
 
 });

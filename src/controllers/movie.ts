@@ -45,9 +45,16 @@ export class MovieController {
     }
 
     async voteMovie(userId: string, movieId: string, score: number ){
-        const user = await this.userRepository.findOne({id:userId});
-        const movie = await this.movieRepository.findOne({id: movieId});
-        this.voteRepository.save({user, movie, score })
+        try{
+            const user = await this.userRepository.findOne({id:userId});
+            const movie = await this.movieRepository.findOne({id: movieId});
+            if(score < 1 || score > 5){
+                throw new Error(`Voto invalido`)
+            }
+            this.voteRepository.save({user, movie, score })
+        }catch(error){
+            throw error;
+        }
     }
 
   
