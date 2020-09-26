@@ -38,9 +38,12 @@ export class MovieController {
     }
     
     async createMovie(movie: IMovie){
-      
-        await Promise.all(movie.actors.map(({name}) => this.actorRepository.save({name})));
-        return this.movieRepository.save({...movie, actors: movie.actors.map(actor => actor)});
+        const {actors} = movie;
+
+        for(const actor of actors){
+            await this.actorRepository.save(actor);
+        }
+        return this.movieRepository.save({...movie, actors});
 
     }
 
